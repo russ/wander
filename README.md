@@ -83,3 +83,31 @@ Node.new("outer", Node.new("inner")).each do |node|
   puts node.name
 end
 ```
+
+#<Journey::GTG::TransitionTable:0x00005597ddc4a458
+ @accepting={2=>true, 3=>true},
+ @memos=
+  {2=>
+    [#<Journey::Nodes::Cat:0x00005597ddc34310
+      @left=
+       #<Journey::Nodes::Slash:0x00005597ddc345e0
+        @left="/",
+        @memo=#<Journey::Nodes::Cat:0x00005597ddc34310 ...>>,
+      @memo=#<Journey::Nodes::Cat:0x00005597ddc34310 ...>,
+      @right=
+       #<Journey::Nodes::Literal:0x00005597ddc34388
+        @left="foo",
+        @memo=#<Journey::Nodes::Cat:0x00005597ddc34310 ...>>>],
+   3=>
+    [#<Journey::Nodes::Cat:0x00005597ddc4b7b8
+      @left=
+       #<Journey::Nodes::Slash:0x00005597ddc4b920
+        @left="/",
+        @memo=#<Journey::Nodes::Cat:0x00005597ddc4b7b8 ...>>,
+      @memo=#<Journey::Nodes::Cat:0x00005597ddc4b7b8 ...>,
+      @right=
+       #<Journey::Nodes::Literal:0x00005597ddc4b808
+        @left="bar",
+        @memo=#<Journey::Nodes::Cat:0x00005597ddc4b7b8 ...>>>]},
+ @regexp_states={},
+ @string_states={0=>{"/"=>1}, 1=>{"foo"=>2, "bar"=>3}}>
