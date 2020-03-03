@@ -12,6 +12,7 @@ describe Wander do
   it "can handle more than one path" do
     table = tt(%w(/foo /bar))
     # pp table
+    pp table.accepting_states
     pp table.string_states
     result = GTG::Simulator.new(table).memos("/foo")
     result.size.should eq(1)
