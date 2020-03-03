@@ -3,6 +3,8 @@ module Wander
     class Builder
       DUMMY = Nodes::Dummy.new
 
+      @_followpos = {} of Nodes::Node => Array(Nodes::Node)
+
       def initialize(root : Nodes::Node)
         @root = root
         @ast = Nodes::Cat.new(root, DUMMY)
@@ -188,12 +190,8 @@ module Wander
       end
 
       def followpos(node)
-        # TODO: Memoize this
-        table = build_followpos
-        # puts "T" * 50
-        # pp table
-        # puts "T" * 50
-        table[node]
+        @_followpos = build_followpos if @_followpos.empty?
+        @_followpos[node]
       end
 
       def build_followpos
@@ -225,6 +223,8 @@ module Wander
             # puts "We're not supposed to be here?: #{n.inspect}"
           end
         end
+
+        # pp table
 
         table
       end
