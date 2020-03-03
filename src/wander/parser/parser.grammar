@@ -1,0 +1,19 @@
+token SLASH = /\//;
+token LITERAL = /[A-Za-z0-9_]+/;
+token DOT = /\./;
+token SYMBOL = /:[A-Za-z0-9_]+/;
+token STAR = /\*[A-Za-z0-9_]+/;
+token LPAREN = /\(/;
+token RPAREN = /\)/;
+token OR = /\|/;
+
+rule S = expressions;
+rule expressions = expressions expression | expression | or;
+rule expression = literal | group | star;
+rule group = LPAREN expressions RPAREN;
+rule or = expressions OR expression;
+rule star = STAR;
+rule slash = SLASH;
+rule symbol = SYMBOL;
+rule dot = DOT;
+rule literal = LITERAL | symbol | slash | DOT;

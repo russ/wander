@@ -1,0 +1,29 @@
+type string = $$ String $$
+type cat = $$ Nodes::Cat $$
+type slash = $$ Nodes::Slash $$
+type group = $$ Nodes::Group $$
+type or = $$ Nodes::Or $$
+type literal = $$ Nodes::Literal $$
+type star = $$ Nodes::Star $$
+type symbol = $$ Nodes::Symbol $$
+type dot = $$ Nodes::Dot $$
+
+typerules cat = [expressions, expression]
+typerules group = [group]
+typerules or = [or]
+typerules literal = [literal]
+typerules star = [star]
+typerules symbol = [symbol]
+typerules dot = [dot]
+typerules slash = [slash]
+
+init = $$ require "../nodes/node" $$
+
+rule expressions(0) = $$ $out = Nodes::Cat.new($0, $1) $$
+rule group(0) = $$ $out = Nodes::Group.new($1) $$
+rule or(0) = $$ $out = Nodes::Or.new([$0, $1]) $$
+rule literal(0) = $$ $out = Nodes::Literal.new($0) $$
+rule star(0) = $$ $out = Nodes::Star.new($0) $$
+rule slash(0) = $$ $out = Nodes::Slash.new($0) $$
+rule symbol(0) = $$ $out = Nodes::Symbol.new($0) $$
+rule dot(0) = $$ $out = Nodes::Dot.new($0) $$
