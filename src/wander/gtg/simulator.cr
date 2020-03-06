@@ -25,7 +25,7 @@ module Wander
           # puts "State: #{state}"
           # puts "Sym: #{sym}"
           # puts "=" * 50
-          state = @tt.mov(state, sym)
+          state = @tt.move(state, sym)
         end
 
         acceptance_states = state.select { |s|

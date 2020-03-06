@@ -1,6 +1,6 @@
 module Wander
   module Nodes
-    class Group < Node
+    class Group < Unary
       def node_type
         "GROUP"
       end

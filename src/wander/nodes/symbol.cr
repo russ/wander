@@ -2,7 +2,7 @@ module Wander
   module Nodes
     DEFAULT_EXP = /[^\.\/\?]+/
 
-    class Symbol < Node
+    class Symbol < Terminal
       def initialize(@left)
         super
         # @regexp = DEFAULT_EXP

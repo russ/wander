@@ -75,7 +75,7 @@ module Wander
         end
       end
 
-      def mov(t, a)
+      def move(t, a)
         return [] of String if t.empty?
 
         regexps = [] of Int32
@@ -116,24 +116,27 @@ module Wander
         # puts "-" * 50
         # puts "From: #{from.inspect}"
         # puts "To: #{to.inspect}"
-        # puts "Sym: #{sym.inspect}"
+        # if sym.is_a?(Pegasus::Generated::Token)
+        #   puts "Sym: #{sym.as(Pegasus::Generated::Token).string.inspect}"
+        # else
+        #   puts "Sym: #{sym.inspect}"
+        # end
         # puts "-" * 50
+
         case sym
         when Pegasus::Generated::Token
           @string_states[from][sym.string] = to
         when String
           @string_states[from][sym] = to
-          # TODO: Make this work again
-          # when Regex
-          #   puts "-" * 50
-          #   puts "From: #{from.inspect}"
-          #   puts "To: #{to.inspect}"
-          #   puts "Sym: #{sym.inspect}"
-          #   puts "-" * 50
-          #   @regexp_states[from][sym] = to
-          # TODO: Shouldn't have this?
-        when Nil
-          puts "..."
+          #   # TODO: Make this work again
+          #   # when Regex
+          #   #   puts "-" * 50
+          #   #   puts "From: #{from.inspect}"
+          #   #   puts "To: #{to.inspect}"
+          #   #   puts "Sym: #{sym.inspect}"
+          #   #   puts "-" * 50
+          #   #   @regexp_states[from][sym] = to
+          #   # TODO: Shouldn't have this?
         else
           raise "unknown symbol: %s" % sym.class
         end

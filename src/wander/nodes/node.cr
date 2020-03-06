@@ -23,6 +23,10 @@ module Wander
       def initialize(@left, @right)
       end
 
+      def build_string
+        Visitors::String::INSTANCE.accept(self, ::String::Builder.new(""))
+      end
+
       def each(&block : Node -> _)
         Visitors::Each::INSTANCE.accept(self, block)
       end
@@ -39,6 +43,7 @@ end
 require "./terminal"
 require "./literal"
 require "./binary"
+require "./unary"
 require "./cat"
 require "./dot"
 require "./dummy"
@@ -49,4 +54,3 @@ require "./slash"
 require "./star"
 require "./symbol"
 require "./token"
-require "./unary"

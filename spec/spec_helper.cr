@@ -8,6 +8,9 @@ def asts(paths)
     ast.each do |n|
       n.not_nil!.memo = ast unless n.nil?
     end
+    # puts "AST" * 5
+    # puts ast.build_string.to_s
+    # puts "AST" * 5
     ast
   end
 end

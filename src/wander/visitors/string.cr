@@ -3,13 +3,9 @@ module Wander
     class String < FunctionalVisitor
       INSTANCE = new
 
-      private def binary(node, seed)
-        visit(node.right, visit(node.left, seed))
-      end
-
       private def nary(node, seed)
-        last_child = node.children.last
-        node.children.inject(seed) { |s, c|
+        last_child = node.not_nil!.children.last
+        node.not_nil!.children.reduce(seed) { |s, c|
           string = visit(c, s)
           string << "|" unless last_child == c
           string
@@ -17,11 +13,15 @@ module Wander
       end
 
       private def terminal(node, seed)
-        seed + node.left
+        if node.is_a?(Nodes::Dummy)
+          seed
+        else
+          seed << node.not_nil!.left.not_nil!.as(Pegasus::Generated::Token).string
+        end
       end
 
       private def visit_group(node, seed)
-        visit(node.left, seed.dup << "(") << ")"
+        visit(node.not_nil!.left, seed.dup << "(") << ")"
       end
     end
   end
