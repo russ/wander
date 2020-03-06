@@ -10,13 +10,23 @@ describe Wander do
   # end
 
   it "can handle more than one path" do
-    table = tt(%w(/my/favorites/:username/month))
+    # table = tt(%w(/foo/:username))
+    # table = tt(%w(/my/favorites/:username/month))
+    table = tt(%w(/strack/:code/:site/:program(/:track(/*path))))
 
+    puts "String States"
     pp table.string_states
+    puts ""
     # pp table.states
     # pp table.transitions
-    # pp table.accepting_states
-    # pp table.string_states
+
+    puts "Regexp States"
+    pp table.regexp_states
+    puts ""
+
+    puts "Accepting States"
+    pp table.accepting_states
+    puts ""
 
     result = GTG::Simulator.new(table).memos("/foo")
     result.size.should eq(1)

@@ -42,11 +42,11 @@ module Wander
         when "BINARY"  then binary(node, seed)
         when "STAR"    then unary(node, seed)
         else
-          # if node.is_a?(Pegasus::Generated::Token)
-          #   terminal(node, seed)
-          # else
-          raise ArgumentError.new("Unknown node type when visiting: #{node.inspect}")
-          # end
+          if node.is_a?(Pegasus::Generated::Token)
+            terminal(node, seed)
+          else
+            raise ArgumentError.new("Unknown node type when visiting: #{node.inspect}")
+          end
         end
       end
 

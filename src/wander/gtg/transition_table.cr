@@ -10,9 +10,10 @@ module Wander
       getter memos : Hash(Int32, Array(StackType))
       # TODO: Remove this when it's not needed for debugging
       getter string_states : Hash(Int32, Hash(String, Int32))
+      getter regexp_states : Hash(String, Hash(String, Int32))
 
       def initialize
-        @regexp_states = {} of String => Hash(Regex, Int32)
+        @regexp_states = {} of String => Hash(String, Int32)
         @string_states = Hash(Int32, Hash(String, Int32)).new do |h, k|
           h[k] = {} of String => Int32
         end
@@ -88,7 +89,7 @@ module Wander
 
           if states = @regexp_states[s]?
             states.each do |re, v|
-              if re.match(a) && !v.nil?
+              if Regex.new(re).match(a) && !v.nil?
                 regexps << v
               end
             end
@@ -113,30 +114,27 @@ module Wander
       end
 
       def []=(from, to, sym)
-        # puts "-" * 50
-        # puts "From: #{from.inspect}"
-        # puts "To: #{to.inspect}"
+        puts "-" * 50
+        puts "From: #{from.inspect}"
+        puts "To: #{to.inspect}"
+        puts "Sym: #{sym.inspect}"
         # if sym.is_a?(Pegasus::Generated::Token)
         #   puts "Sym: #{sym.as(Pegasus::Generated::Token).string.inspect}"
         # else
         #   puts "Sym: #{sym.inspect}"
         # end
-        # puts "-" * 50
+        puts "-" * 50
 
         case sym
-        when Pegasus::Generated::Token
-          @string_states[from][sym.string] = to
+        # when Pegasus::Generated::Token
+        #   @string_states[from][sym.string] = to
         when String
           @string_states[from][sym] = to
-          #   # TODO: Make this work again
-          #   # when Regex
-          #   #   puts "-" * 50
-          #   #   puts "From: #{from.inspect}"
-          #   #   puts "To: #{to.inspect}"
-          #   #   puts "Sym: #{sym.inspect}"
-          #   #   puts "-" * 50
-          #   #   @regexp_states[from][sym] = to
-          #   # TODO: Shouldn't have this?
+        when Regex
+          unless @regexp_states[from.to_s]?
+            @regexp_states[from.to_s] = {} of String => Int32
+          end
+          @regexp_states[from.to_s][sym.to_s] = to
         else
           raise "unknown symbol: %s" % sym.class
         end
@@ -155,6 +153,17 @@ module Wander
           hash.map { |s, to| [from, s, to] }
         }
       end
+
+      # private def states_hash_for(sym)
+      #   case sym
+      #   when String
+      #     @string_states
+      #   when Regex
+      #     @regexp_states
+      #   else
+      #     raise "unknown symbol: %s" % sym.class
+      #   end
+      # end
     end
   end
 end

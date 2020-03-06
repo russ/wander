@@ -5,7 +5,7 @@ module Wander
     class Symbol < Terminal
       def initialize(@left)
         super
-        # @regexp = DEFAULT_EXP
+        @regexp = DEFAULT_EXP
       end
 
       def node_type

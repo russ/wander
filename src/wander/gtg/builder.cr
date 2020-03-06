@@ -37,9 +37,9 @@ module Wander
           next if marked[s]?
           marked[s] = true
 
-          puts "S" * 50
-          pp s
-          puts "S" * 50
+          # puts "S" * 50
+          # pp s
+          # puts "S" * 50
 
           s.group_by { |state| symbol(state) }.each do |sym, ps|
             u = ps.flat_map { |l| followpos(l) }
@@ -47,11 +47,11 @@ module Wander
             next if u.empty?
 
             if u.uniq == [DUMMY]
-              puts "DUMMY BRANCH"
-              puts "*" * 50
-              puts "S: #{state_id[s]}"
-              puts "*" * 50
-              puts "DUMMY BRANCH"
+              # puts "DUMMY BRANCH"
+              # puts "*" * 50
+              # puts "S: #{state_id[s]}"
+              # puts "*" * 50
+              # puts "DUMMY BRANCH"
 
               from = state_id[s]
               to = state_id[GTGReference.new]
@@ -70,12 +70,12 @@ module Wander
               s_id = state_id[s]
               u_id = state_id[u]
 
-              puts "NOT DUMMY BRANCH"
-              puts "*" * 50
-              puts "S: #{s_id}"
-              puts "U: #{u_id}"
-              puts "*" * 50
-              puts "NOT DUMMY BRANCH"
+              # puts "NOT DUMMY BRANCH"
+              # puts "*" * 50
+              # puts "S: #{s_id}"
+              # puts "U: #{u_id}"
+              # puts "*" * 50
+              # puts "NOT DUMMY BRANCH"
 
               dtrans[s_id, u_id] = sym
               if u.includes?(DUMMY)
@@ -92,7 +92,7 @@ module Wander
           end
         end
 
-        pp state_id
+        # pp state_id
 
         dtrans
       end
@@ -195,26 +195,15 @@ module Wander
       end
 
       def symbol(edge)
-        # case edge
-        # when Nodes::Symbol
-        #   edge.left.not_nil!.as(Pegasus::Generated::Token).regexp
-        # when Nodes::Terminal
-        #   pp edge.left
-        #   edge.left.not_nil!.as(Pegasus::Generated::Token).string
-        # when Pegasus::Generated::Token
-        #   edge.string
-        # else
-        #   edge.left
-        # end
+        puts "builder:L198" + "=" * 10
+        pp edge
+        puts "builder:L200" + "=" * 10 + "\n\n"
 
         case edge
         when Nodes::Dummy
-          puts "E" * 50
-          pp edge
-          puts "E" * 50
-          edge
+          nil
         when Nodes::Symbol
-          edge.left.not_nil!.as(Pegasus::Generated::Token).regexp
+          edge.regexp
         else
           edge.left.not_nil!.as(Pegasus::Generated::Token).string
         end
